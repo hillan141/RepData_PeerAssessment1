@@ -1,14 +1,10 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
 
 
 ## Loading and preprocessing the data
 
-```{r load-prepro, cache=TRUE, echo=TRUE}
+
+```r
 require(lattice)
 if (!file.exists("activity.zip"))
     unzip("acivity.zip")
@@ -17,32 +13,38 @@ smat <- tapply(steps$steps, list(steps$date, steps$interval), function(z)z)
 ```
 
 ## What is mean total number of steps taken per day?
-```{r count, cache=TRUE, echo=TRUE, fig.height=6, fig.width=6}
+
+```r
 steps.perday <- sapply(split(steps$steps, steps$date),sum, na.rm=TRUE)
 steps.med <- median(steps.perday, na.rm=TRUE)
 steps.mean <- mean(steps.perday, na.rm=TRUE)
 hist(steps.perday, main="Distribution of daily steps", 
      xlab="Steps per day", breaks=12)
 ```
+
+![](PA1_template_files/figure-html/count-1.png) 
   
-The median steps per day is: ***`r steps.med`***  
-The mean steps per day is: ***`r steps.mean`***  
+The median steps per day is: ***10395***  
+The mean steps per day is: ***9354.2295082***  
 
 ## What is the average daily activity pattern?
 
-```{r daily, cache=TRUE, echo=TRUE, fig.height=4, fig.width=6}
+
+```r
 msi <- apply(smat,2,mean,na.rm=TRUE)
 maxint <- names(msi)[which.max(msi)]
 plot(names(msi), msi, xlab="5 minute interval within day", type="l", ylab="average # steps")
 abline(v=names(msi)[which.max(msi)])
 text(names(msi)[which.max(msi)], 150, sprintf("most active interval: %s", names(msi)[which.max(msi)]), pos=4)
+```
 
-```   
+![](PA1_template_files/figure-html/daily-1.png) 
 
-The interval with the maximum average steps has identifier: ***`r maxint`***  
+The interval with the maximum average steps has identifier: ***835***  
 
 ## Imputing missing values
-```{r impute, cache=TRUE, echo=TRUE, fig.width=6, fig.height=6}
+
+```r
 myimpute <- function(z) {
   z[!is.finite(z)] <- median(z, na.rm=TRUE)
   z
@@ -54,10 +56,12 @@ day.mean <- mean(day.sum)
 day.med <- median(day.sum)
 hist(day.sum, main="Distribution of daily steps (imputed)", 
      xlab="Steps per day", breaks=12)
-```  
+```
 
-The median steps per day (after imputing) is: ***`r day.med`***  
-The mean steps per day (after imputing) is: ***`r day.mean`***  
+![](PA1_template_files/figure-html/impute-1.png) 
+
+The median steps per day (after imputing) is: ***10395***  
+The mean steps per day (after imputing) is: ***9503.8688525***  
 
 These values are very similar to the estimates from the first part of the assignment.  So there is little impact of imputing missing data on the estimates of the total daily number of steps.
 
@@ -65,7 +69,8 @@ These values are very similar to the estimates from the first part of the assign
 
 The following code creates the panel plot comparing daily activity patterns on weekdays versus weekends.
 
-```{r weekends, cache=TRUE, echo=TRUE, fig.height=6, fig.width=5}
+
+```r
 wd <- ifelse(weekdays(strptime(rownames(smat.i), "%Y-%m-%d")) %in% 
                c("Saturday", "Sunday"), "weekend", "weekday")
 is <- split(1:nrow(smat.i), wd)
@@ -77,6 +82,7 @@ for (i in names(mdd)) {
        ylim=c(0,200))
   text(x=1000,y=190, i,pos=4, cex=1.5)
 }
-
 ```
+
+![](PA1_template_files/figure-html/weekends-1.png) 
 
