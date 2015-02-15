@@ -1,4 +1,9 @@
-# Reproducible Research: Peer Assessment 1
+---
+title: "Reproducible Research: Peer Assessment 1"
+output: 
+  html_document:
+    keep_md: true
+---
 
 
 ## Loading and preprocessing the data
@@ -22,7 +27,7 @@ hist(steps.perday, main="Distribution of daily steps",
      xlab="Steps per day", breaks=12)
 ```
 
-![](PA1_template_files/figure-html/count-1.png) 
+![plot of chunk count](figure/count-1.png) 
   
 The median steps per day is: ***10395***  
 The mean steps per day is: ***9354.2295082***  
@@ -38,7 +43,7 @@ abline(v=names(msi)[which.max(msi)])
 text(names(msi)[which.max(msi)], 150, sprintf("most active interval: %s", names(msi)[which.max(msi)]), pos=4)
 ```
 
-![](PA1_template_files/figure-html/daily-1.png) 
+![plot of chunk daily](figure/daily-1.png) 
 
 The interval with the maximum average steps has identifier: ***835***  
 
@@ -58,7 +63,7 @@ hist(day.sum, main="Distribution of daily steps (imputed)",
      xlab="Steps per day", breaks=12)
 ```
 
-![](PA1_template_files/figure-html/impute-1.png) 
+![plot of chunk impute](figure/impute-1.png) 
 
 The median steps per day (after imputing) is: ***10395***  
 The mean steps per day (after imputing) is: ***9503.8688525***  
@@ -84,5 +89,5 @@ for (i in names(mdd)) {
 }
 ```
 
-![](PA1_template_files/figure-html/weekends-1.png) 
+![plot of chunk weekends](figure/weekends-1.png) 
 
