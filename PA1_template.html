@@ -239,7 +239,11 @@ text(names(msi)[which.max(msi)], 150, sprintf(&quot;most active interval: %s&quo
 
 <h2>Imputing missing values</h2>
 
+<p>To impute missing values, my strategy will be to replace the missing values with the median value of the corresponding 5 minute interval across all days.  Thus each value is imputed to be a number representative of other values from the same time of day.</p>
+
 <pre><code class="r">myimpute &lt;- function(z) {
+  # Impute missing values using the median
+  # of values from same time interval
   z[!is.finite(z)] &lt;- median(z, na.rm=TRUE)
   z
 }

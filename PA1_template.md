@@ -49,8 +49,13 @@ The interval with the maximum average steps has identifier: ***835***
 
 ## Imputing missing values
 
+To impute missing values, my strategy will be to replace the missing values with the median value of the corresponding 5 minute interval across all days.  Thus each value is imputed to be a number representative of other values from the same time of day.
+
+
 ```r
 myimpute <- function(z) {
+  # Impute missing values using the median
+  # of values from same time interval
   z[!is.finite(z)] <- median(z, na.rm=TRUE)
   z
 }
